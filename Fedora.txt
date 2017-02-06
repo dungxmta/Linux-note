@@ -1,0 +1,89 @@
+install
+    $ sudo dnf install <package_name>
+    $ sudo dnf install <link>
+    $ sudo rpm -i <link.rmp>
+reinstall
+    $ sudo dnf reinstall <package_name>
+remove
+    $ sudo dnf remove <package_name>
+                    <https://dnf.readthedocs.io/en/latest/command_ref.html>
+----------------------------------------------------------------------------
+[Updating system packages to latest version]
+    $ sudo dnf update
+
+[Install & Enable RPM Fusion Repository]
+    $ su -c 'dnf install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm'
+
+[Install Development Tools and Libraries]
+    $ sudo dnf groupinstall 'Development Tools'
+    $ sudo dnf groupinstall 'C Development Tools and Libraries'
+
+[Install media codecs]
+    $ sudo dnf install gstreamer-plugins-bad gstreamer-plugins-bad-free-extras gstreamer-plugins-bad-nonfree gstreamer-plugins-ugly gstreamer-ffmpeg gstreamer1-libav gstreamer1-plugins-bad-free-extras gstreamer1-plugins-bad-freeworld gstreamer1-plugins-base-tools gstreamer1-plugins-good-extras gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-good gstreamer1-plugins-base gstreamer1
+
+    $ sudo dnf install gstreamer{1,}-{ffmpeg,libav,plugins-{good,ugly,bad{,-free,-nonfree}}} --setopt=strict=0
+    
+[Fonts]
+    $ sudo dnf install curl cabextract xorg-x11-font-utils fontconfig
+    $ sudo rpm -i ftp://ftp.pbone.net/mirror/ftp5.gwdg.de/pub/opensuse/repositories/home:/csa7fff:/adei/openSUSE_12.3/noarch/msttcorefonts-2.0-11.1.noarch.rpm
+
+
+[Install Flash player for 64-bit system]
+    $ sudo rpm -ivh http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
+
+[Import adobe key]
+    $ sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-adobe-linux
+
+[Install flash plugin]
+    $ sudo dnf install flash-plugin alsa-plugins-pulseaudio libcurl
+
+
+[Install app] sudo dnf install ...
+
+- torrent:            deluge
+- img-editor:         gimp
+- video-ed:           kdenlive, openshot
+- video-cv:           handbrake
+- stream:             obs-studio
+- cleaner:            bleachbit
+- package-manager:    yumex-dnf
+- archive formats:    p7zip p7zip-plugins unrar
+- tweak-tool:         gnome-tweak-tool, dconf-editor
+- unikey:             ibus-bogo (vn-unikey default installed) 
+- note:               sticky-notes
+
+[Google Chrome]
+1. Create google-chrome repo file:
+    $ sudo gedit /etc/yum.repos.d/google-chrome.repo
+2. Enter the following contents to this file:
+    [google-chrome]
+    name=google-chrome
+    baseurl=http://dl.google.com/linux/chrome/rpm/stable/$basearch
+    enabled=1
+    gpgcheck=1
+    gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
+3. Install it from terminal:
+    $ sudo dnf install google-chrome-stable
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+# Brightness Adjust Not Working
+
+    $ sudo echo -e ' Section "Device"\n\tIdentifier "Intel Graphics"\n\tDriver "intel"\n\tBusID "PCI:0:2:0"\n\tOption "Backlight" "intel_backlight"\n EndSection' | sudo tee /etc/X11/xorg.conf.d/20-intel.conf 
+
+or
+
+    $ sudo touch /usr/share/X11/xorg.conf.d/20-intel.conf
+    $ sudo gedit /usr/share/X11/xorg.conf.d/20-intel.conf
+
+now you will need to copy and paste this into the file
+
+Section "Device"
+        Identifier  "card0"
+        Driver      "intel"
+        Option      "Backlight"  "intel_backlight"
+        BusID       "PCI:0:2:0"
+
+EndSection
+
+-------------------------------------------------------------------------
+

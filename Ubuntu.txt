@@ -1,0 +1,106 @@
+dia chi cac ung dung da cai	/usr/bin
+----------------------------------------------------------
+- Unity Tweak Tool //(Launcher, Dash, Panel, Switcher, Webapp…)
+	sudo add-apt-repository ppa:freyja-dev/unity-tweak-tool-daily
+	sudo apt-get update
+	sudo apt-get install unity-tweak-tool
+
+- CompizConfig Settings Manager //(3D desktop visual effects...)
+(Compiz and plugins)
+	sudo apt-get install compizconfig-settings-manager compiz-plugins-extra
+	
+- Ubuntu Tweak //(configuration tool for the Unity desktop environment)
+	sudo add-apt-repository ppa:tualatrix/ppa 
+	sudo apt-get update
+	sudo apt-get install ubuntu-tweak
+
+- Grub Customizer //(set default OS to boot)
+	sudo add-apt-repository ppa:danielrichter2007/grub-customizer
+	sudo apt-get update
+	sudo apt-get install grub-customizer
+	
+- Synaptic Package Manager //(quan ly cac goi cai dat)
+		sudo apt-get install synaptic
+-------------------------------------------------------
+Classic Gnome Menu // menu/list apps on taskbar
+	sudo apt-add-repository ppa:diesch/testing
+	sudo apt-get update
+	sudo apt-get install classicmenu-indicator
+	
+---
+chuyen sang quyen root:
+ 						sudo su
+ 					or	sudo -i
+---
+copy/paste root:
+ 				sudo nautilus
+---
++ De xem app khoi dong cung he thong, chay lenh sau:
+	 cd /etc/xdg/autostart/
+	 ls
++ Hien thi toan bo app bi an trong Startup Applications
+ sudo sed -i 's/NoDisplay=true/NoDisplay=false/g' /etc/xdg/autostart/*.desktop
+  
+---
+font unicode
+ 			sudo apt-get install ttf-mscorefonts-installer
+add font thu? cong^
+			copy font vao "/usr/share/fonts/truetype/(msttcorefonts)"
+			(chay 'fc-cache' de cap nhat danh sach font neu ko co)
+1 cach nua ko can quyen root la 
+			copy font vao thu muc $HOME/.fonts 
+									(~/.fonts)
+---
+thay hinh nen login:
+ +setup Ubuntu Tweak
+ +neu ko doi dc,thu rename -> warty-final-ubuntu.png or 5188_.jpg
+ 
+---
++ open "compizConfig setting manager" from Terminal: type "ccsm"
++ startup applications -> u/d khoi dong cung hdh
++ system monitor -> like task manager on windows
+---
+
+typing
+	Klavaro
+or	KTouch
+---
+tu dien?
+	goldendict
+	
+---
+PDF reader multiTab
+	Foxit reader
+or
+	sudo add-apt-repository ppa:b-eltzner/qpdfview
+	sudo apt-get update
+	sudo apt-get install qpdfview
+---
+Paint
+	sudo apt-get install pinta
+or
+	KolourPaint
+or
+	inkscape
+---
+Torrent
+	sudo add-apt-repository ppa:deluge-team/ppa
+	sudo apt-get update
+	sudo apt-get install deluge
+---
+mkvExtractor
+	sudo add-apt-repository ppa:hizo/mkv-extractor-gui
+	sudo apt-get update
+	sudo apt-get install mkv-extractor-qt
+---
+f.lux
+	sudo add-apt-repository ppa:kilian/f.lux
+	sudo apt-get update
+	sudo apt-get install fluxgui
+	
+---
+Matrix (like a matrix in film:3)
+	sudo apt-get install cmatrix
+	(cmatrix -b)
+---
+note: xpad

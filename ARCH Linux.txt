@@ -1,0 +1,407 @@
+---------------------------------------------------------------------------ARCH-NOTE---------------
+~/.xprofile                             -> command start with X (startup)
+~/.bashrc                              -> command start with Terminal
+/etc/lxdm/lxdm.conf         -> lxdm config (logon manager)
+
+# lspci -k | grep -A 2 -E "(VGA|3D)" -> info video card
+   sleep 20; cmd                                     -> start "cmd" after 20s
+# default size Terminal: 82x24
+--------------------------------------------------------------------------------
+---------------------------------------------------------DE--WM--DM------
+# Desktop environtment <https://wiki.archlinux.org/index.php/desktop_environment>
+    - XFCE4, LXDE
+    - Gnome3, Gnome Flashback (shell for GNOME 3...it similar to Gnome2)
+    - Cinnamon (fork of Gnome3), MATE (fork of Gnome2)
+    - KDE Plashma (KDE5)
+
+# Windows manager <https://wiki.archlinux.org/index.php/window_manager>
+    - xfwm4 (XFCE4), kwin (KDE), marco (MATE)
+    - compiz, gala
+    - Tiling wm: i3-wm, awesome
+# change wm: <wm-name> --replace &
+
+# Display manager <https://wiki.archlinux.org/index.php/display_manager>
+    Login manager:
+    - LXDM (Lxde), LightDM
+    - GDM (Gnome)
+    - KDM (Kde4)
+--------------------------------------------------------------------------------
+-------------------------------------------------------------------XFCE4-----
+# zoom display in xfce4
+    Alt + scroll
+# resizing windows
+    Alt + right-click (+ drag-mouse)
+    Alt + F8
+# keyboard shortcuts on xfce4
+    xfce4-popup-whiskermenu    -> Super (open whiskermenu)
+    xfce4-terminal                            -> Ctrl + Alt + T (terminal)
+    xfce4-terminal --drop-down   -> F12 (terminal -down)
+    xfce4-screenshooter -f            -> Print (full screen)
+                                              -r            -> Ctrl + Print (select the area with mouse) 
+                                              -w           -> Shift + Print (active window)
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+pacman:
+    sudo pacman [option] <package_name>
+                -S     : install package
+                -Sy   : update database and install package
+                -R     : remove package
+                -Rsc : remove with all the package dependencies
+
+    pacman -Ss string1 string 2          : search package on database
+                     -Qs <package_name>    : search package was installed
+
+    pacman -Syy     : sync mirror
+                      -Suy    : upgrade system
+                      -Sc       : remove package cache
+yaourt:
+    yaourt -S           : install or update package
+                  -Sy         : synchronize the pacman package database
+                  -R           : remove package
+                  -G           : get the PKGBUILD for package
+                  --stats   : show how much space packages are using
+
+--------------------------------------------------------------------------------
+SOFT----------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+# AUR <Arch User Repository> yaourt
+    sudo mousepad /etc/pacman.conf
+
+    sudo pacman -Sy yaourt
+
+# find fastest mirror network
+    sudo pacman-mirrors -g
+    
+# bash auto-completion
+    sudo pacman -S bash-completion
+
+# GUI package manager
+    yaourt -S pamac-aur //option for AUR
+    yaourt -S octopi        //other GUI pm
+    yaourt -S kalu          //infomation of new packages, news, update...
+
+# volume on xfce4
+    sudo pacman -S pavucontrol pulseaudio-alsa
+    yaourt -S xfce4-volumed
+
+# printer, scaner
+    sudo pacman -S libcups cups ghostscript gsfonts system-config-printer simple-scan
+        sudo systemctl enable org.cups.cupsd.service
+        sudo systemctl enable cups-browsed.service
+        sudo systemctl start org.cups.cupsd.service
+        sudo systemctl start cups-browsed.service
+
+# bluetooth
+    sudo pacman -S bluez bluez-cups bluez-utils
+        sudo modprobe btusb
+        sudo systemctl start bluetooth
+        sudo systemctl enable bluetooth
+    yaourt -S blueman
+    
+    + turn off Bluetooth auto-on-boot (Disable auto power-on)
+        - applet-blueman > Plugins > PowerManager > Configuration > disabled..
+        - dconf-editor > "org.blueman.plugins.powermanager" > disabled..
+        - $ gsettings set org.blueman.plugins.powermanager auto-power-on false
+
+# font          -- manual install: copy font to '~/.fonts/' then run 'fc-cache'
+    yaourt ttf-ms-fonts
+    sudo pacman -S opendesktop-fonts
+    yaourt -S fontconfig-ttf-ms-fonts
+    yaourt -S ttf-google-fonts-git
+
+
+# codec, flashplayer..
+    sudo pacman -S a52dec faac faad2 flac jasper lame libdca libdv libmad libmpeg2 libtheora libvorbis libxv wavpack x264 xvidcore gstreamer0.10-plugins flashplugin libdvdcss libdvdread libdvdnav gecko-mediaplayer dvd+rw-tools dvdauthor dvgrab cdrdao
+
+# zip, extractor
+    sudo pacman -S zlib p7zip unzip zip zziplib unrar
+    yaourt -S engrampa-thunar
+
+# screenfetch
+    sudo pacman -S screenfetch
+
+    gedit $HOME/.bashrc
+        -add this cmd on it: screenfetch
+
+#sudo pacman -S
+
+grub                            : grub-customizer
+cleaner                      : bleachbit
+partition tool            : gparted
+music player            : rhythmbox, clementine
+system.log/edittor : dconf-editor, pacmanlogviewer
+info.system              : hardinfo
+AppLauncher          : gnome-pie (use mouse to show the launcher)
+ebook.reader          : calibre
+calculator                  : gnome-calculator
+webcam                     : cheese
+edit audio                  : audacity
+screen recorder      : simplescreenrecorder, obs-studio
+img                              : gimp, kdegraphics-kolourpaint, pinta
+sub                              : aegisub
+mind-map                 : xmind (need install ''jre'' first)
+typing                         : klavaro, kdeedu-ktouch
+editor                        : sublime-text-dev, gedit (gedit-plugins), mousepad, leafpad
+IDE                             : codeblocks, geany, eclipse
+download tool        : wget, youtube-dl
+torrent                      : deluge, transmission-gtk
+PDF reader              : evince
+
+#yaourt
+
+office                  : wps-office
+pdf reader        : foxitreader, acroread, evince-no-gnome (not have dependencies ''gnome-desktop'')
+dvd...                  : imagination (dvd slideshow maker), bombono-dvd (dvd authoring)
+conky-gadget  : conky-manager
+java                     : jre, jdk (JDK already contains JRE)
+
+# comic/manga viewer    --support continuous scrolling mode
+    evince (pdf, cbz, cbr..)                                                --yes
+    mcomix (pdf, rar, zip, cbr, cbz..)                             --no
+    qcomicbook-git (pdf, rar, zip, cbr, cbz..) <aur>  --yes
+
+# screenlight --change brightless to protect eyes
+    sudo pacman -S redshift 
+        <To working offline, copy redshift.conf to ~/.config/>
+        <https://wiki.archlinux.org/index.php/Redshift>
+    yaourt fluxgui (not working sometime@@)
+# time break --like eyecare, eyeleo on Windows
+    yaourt safeeyes
+    yaourt workrave
+        or use the default applet on xfce4-panel
+
+# teamviewer
+    yaourt teamviewer
+         sudo systemctl enable teamviewerd
+        sudo systemctl start teamviewerd
+note: ver 11 working fine. if GUI not showing up, update lib32-libxcb (1.12-1 make error)
+
+# share file p2p (via LAN, wifi) ---multi-OS (win, linux, phone..)
+    yaourt dukto
+        <http://www.msec.it/blog/?page_id=11>
+
+# web browser
+    sudo pacman -S firefox
+    yaourt google-chrome
+TOR:
+    tar -xvJf tor-browser-linux64-5.5.1_en-US.tar.xz 
+    cd /.../tor-browser_en-US/
+    ./start-tor-browser.desktop --register-app
+
+# themes, icon...
+    yaourt gtk-theme-config
+
+    sudo pacman -S faenza-icon-theme
+       sudo pacman -S numix-themes
+    yaourt numix-frost-themes
+# lxdm theme
+    yaourt lxdm-themes
+    <login display manager: lxdm (LXDE), gdm (Gnome), kde (KDE), lightdm (in Ubuntu..) ...>
+
+# ibus
+ibus-unikey:
+    sudo pacman -S ibus-unikey
+    ibus-setup
+ibus-bogo:
+    yaourt ibus-bogo
+    gedit ~/.profile
+        export GTK_IM_MODULE=ibus
+        export QT4_IM_MODULE=xim
+        export QT_IM_MODULE=xim
+        export XMODIFIERS=@im=ibus
+--start ibus at startup
+    gedit $HOME/.xprofile
+    gedit $HOME/.bashrc
+        -add cmd: ibus-daemon -xdr
+--change color 'EN' icon in panel
+    open dconf > desktop > ibus > panel > xkb-icon-rgba > #C8C8C8
+    
+# menu editor for Whiskermenu-xfce4 (like Start-menu-win7)
+    yaourt -S menulibre
+
+# connect android MTP-device (ex: gg nexus7)
+    sudo pacman -S gvfs-mtp
+        <https://wiki.archlinux.org/index.php/MTP#gvfs-mtp>
+# To tether iPhone over USB
+    - install these packages: usbmuxd, libimobiledevice and ifuse.
+    - ensure the ipheth module is loaded (currently included in the default and LTS Archlinux kernels)
+            + sudo modprobe ipheth
+    - for some reason, the ipheth module only works when the iPhone's filesystem has been mounted by ifuse, so unless your system did it automatically when you plugged your iPhone in, you'll need to do it manually:
+            + sudo ifuse /path/to/mountpoint
+    - manually unmount it later, run:
+            + sudo fusermount -u /path/to/mountpoint
+        <https://wiki.archlinux.org/index.php/IPhone_tethering>
+
+
+--------------------------------------------------------------------------------
+-----Edit-VIDEO-Audio-using- FFmpeg------------------------
+---------------------------------<https://trac.ffmpeg.org/wiki>-
+# calculate Bitrate
+        - 10 minutes (600 seconds) long
+        - output of 50 MB is desired.
+        - bitrate = file size /duration:
+           + (50 MB * 8192 [converts MB to kilobits]) / 600 seconds 
+                                                                = ~683 kilobits/s total bitrate
+           + 683k - 128k (desired audio bitrate) = 555k video bitrate
+
+# some options
+        -i filename (input)    - input file name
+        -ss position                 - seeks in this input file to position
+        -ss 60 -t 10                  - capture from second 60 to 70
+        -ss 60 -to 70               - capture from second 60 to 70
+        -c copy                         - not re-encoded video
+        -b:v 686k                     - encoded with 686KB/s video bitrate
+        -s 852:480                  - resize resolution
+        -aspect 1920:1080  - 1920x1080
+        -aspect 1                     - same resolution as src
+        -preset slower           - set the encoding speed
+                [-][HH:]MM:SS[.m...]
+                ‘wvga’     852x480
+                ‘vga’        640x480
+                ‘svga’      800x600
+                ‘xga’        1024x768
+                
+# preset options
+        - A preset is a collection of options that will provide a certain 
+                encoding speed to compression ratio. A slower preset will 
+                provide better compression (compression is quality per filesize)
+        - options: ultrafast, superfast,  veryfast,  faster,  fast,  
+                           medium,  slow,  slower,  veryslow,  placebo. 
+        - default: medium
+        
+# cut & not re­-encoded source-video
+    ffmpeg -i movie.mp4 -ss 00:00:03 -t 00:00:08 -async 1 -c copy cut.mp4
+        <output: from 'second 3 to 11' in input>
+    
+# cut & re­-encoded source-video to mp4
+    ffmpeg -i movie.TS -ss 00:00:03 -to 00:00:08 -async 1 -strict -2 cut.mp4
+        <output: from 'second 3 to 8' in input>
+
+# resize & specific Bitrate
+    ffmpeg -i test.mp4 -b:v 686k -s 852:480 -strict -2 resize.mp4
+    
+# x265-encoded
+    ffmpeg -i test.TS -ss 00:05:46 -to 00:46:46 -c:v libx265 -async 1 -preset veryslow  -strict -2 test_x265.mp4
+    
+--------------------------------------------------------------------------------
+--------------------Bumblebee with Intel/ NVIDIA------------
+--------------------------------------------------------------------------------
+# see card info:
+    lspci -k | grep -A 2 -E "(VGA|3D)"
+
+# sudo pacman -S
+    bumblebee, mesa, mesa-libgl, xf86-video-intel, nvidia
+    lib32-virtualgl, lib32-nvidia-utils, lib32-mesa-libgl
+    bbswitch, primus, lib32-primus
+    nvidia-settings
+    mesa-demos (to test, include "glxgears")
+
+# add user, enable service:
+    sudo gpasswd -a user bumblebee
+    sudo systemctl enable nvidia-enable.service
+
+# test:
+    optirun glxgears -info
+    - if failts, try: optirun glxspheres64
+    - to test intel card, try: glxspheres64
+
+# usage:
+    optirun [options] application [application-parameters]
+    - for example, start Windows applications with Optimus:
+            optirun wine application.exe
+    - open NVIDIA Setting panel with Optimus
+            optirun -b none nvidia-settings -c :8
+
+# note
+    - shouldn't run "nvidia-xconfig"
+    - make sure that "lib32-nvidia-libgl" is not installed
+    - set Bridge=primus in /etc/bumblebee/bumblebee.conf 
+
+--------------------------------------------------------------------------------
+-----FIX-ERROR----------------------------------------------------------
+--------------------------------------------------------------------------------
+# Downgrading packages
+- Using the pacman cache
+    # cd /var/cache/pacman/pkg/
+    # pacman -U <file_name_of_the_package>
+- Soft
+    downgrader<AUR>
+    downgrade<AUR>
+    agetpkg-git<AUR>
+- more: https://wiki.archlinux.org/index.php/downgrading_packages
+--------------------------------------------------------------------------------
+# Not show the wifi list after logout-login
+    - Try: systemctl restart NetworkManager
+or
+    -To connect to a wifi network:
+        nmcli dev wifi connect <name> password <password>
+    -To connect to a wifi on the wlan1 wifi interface:
+        nmcli dev wifi connect <name> password <password> iface wlan1 [profile name]
+    -To disconnect an interface:
+        nmcli dev disconnect iface eth0
+    -To reconnect an interface marked as disconnected:
+        nmcli con up uuid <uuid>
+    -To get a list of UUIDs:
+        nmcli con show
+    -To see a list of network devices and their state:
+        nmcli dev
+    -To turn off wifi:
+        nmcli r wifi off
+--------------------------------------------------------------------------------
+# disable beep sound while typing some buttons
+    gedit ~/.xprofile
+        -add cmd: xset -b
+
+# missing gpg key while installing package by yaourt
+
+<...demo with key CDBD406AA1AA7A1D...>
+FAILED (unknown public key CDBD406AA1AA7A1D)
+==> ERROR: One or more PGP signatures could not be verified!
+<...>
+
+    gpg --recv-key CDBD406AA1AA7A1D
+    gpg --lsign CDBD406AA1AA7A1D
+    gpg --keyserver http://pgp.mit.edu:11371 --recv-keys CDBD406AA1AA7A1D
+
+--------------------------------------------------------------------------------
+# Commands for Managing System Clock.
+
+(Veiw Crrent status)  timedatectl status
+(enable ntp) sudo pacman -S ntp
+             sudo timedatectl set-ntp true    (1)
+(List Timezones)  timedatectl list-timezones
+(set Timezone "Example")  sudo timedatectl set-timezone Asia/Ho_Chi_Minh     (2)
+(Manually set system Time "Example")  sudo timedatectl set-time "2013-08-11 23:56:16"
+
+Note:  To Fix Clock errors when dual booting, Select Local time when installing Arch
+       ( This is done by default if using GUI install) Then Open Terminal and Set the TimeZone as UTC. Using the followng command. 
+
+         sudo timedatectl set-timezone UTC    (3)// do it if you use UTC-time
+
+There is a bug that causes the System time and the Local time to be reversed. Setting
+The TimeZone to UTC Results in Correct time Being diplayed on the Desktop.
+
+# fix wrong clock on Win/Ubuntu/Arch
+    timedatectl set-local-rtc 0 (linux read local-time)
+--------------------------------------------------------------------------------
+
+# re-gen GRUB2
+Note: Remember that grub.cfg has to be re-generated after any change to /etc/default/grub or files in /etc/grub.d/.
+
+Use the grub-mkconfig tool to generate grub.cfg:
+    grub-mkconfig -o /boot/grub/grub.cfg
+
+--------------------------------------------------------------------------------
+
+# rhythmbox not playing *mp3
+
+            Error transferring track
+Didn't get a playback URI for entry file: ... .mp3
+
+install: gst-plugins-ugly, gst-libav 
+    (open pacma->search "rhythmbox"->Details
+                          ->tab "Dependencies"->Option Depen...->Install...)
+--------------------------------------------------------------------------------
+
+
+
